@@ -4,3 +4,5 @@ from os import path as PA
 basedir = PA.abspath(PA.dirname(__file__))
 
 from app        import main
+
+app = main.Main()

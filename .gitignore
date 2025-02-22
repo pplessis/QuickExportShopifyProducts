@@ -1,2 +1,6 @@
 .DS_STORE
+*.pyc
 __pycache__
+
+# Personal INFO
+app/libs/shopifyInfo.py
