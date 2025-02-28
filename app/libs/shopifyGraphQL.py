@@ -229,16 +229,20 @@ class ShopifyGraphQL (SC) :
     # #######################
 
     @staticmethod
-    def backupResult(ArrayData, ObjectName):
-        jsonText  =  ''
-        jsonFolder = SthShopifyGraphQL.DEFAULT_FOLDER_JSON
+    def backupResult(ArrayData, ObjectName) -> str:
+        jsonText  =  ShopifyGraphQL.getJson(ArrayData)
+        jsonFolder = ShopifyGraphQL.DEFAULT_FOLDER_JSON
         now = datetime.now()
         nowStr = now.strftime('%Y%m%d%H%M%S')
         result = ''
 
-        jsonText  = json.dumps(ArrayData, default = lambda o: o.__dict__, sort_keys=False)
         filename = '{0}_{1}.json'.format( nowStr , ObjectName )
         result = Io.saveTxtFile(jsonFolder , filename, jsonText)
 
         return result
+    
+    @staticmethod
+    def getJson(ArrayData) -> str:
+        jsonText  = json.dumps(ArrayData, default = lambda o: o.__dict__, sort_keys=False)
+        return jsonText
 
