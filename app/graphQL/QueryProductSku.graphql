@@ -1,0 +1,17 @@
+""" QUERY """
+query ($sku_prefix: String!) {
+  products(first: 100, query: $sku_prefix) {
+      nodes {
+        id
+        metafields (first:1 keys:"back.child_products") {nodes{key value}}
+        variants(first: 10) { nodes{sku} }
+      }
+    }
+}
+
+""" VARIABLES """
+{
+   "sku_prefix": "%SKU_PREFIX%"
+}
+
+# EG: "sku_prefix": "FRA_PRODUCT_o001x01_101447*"

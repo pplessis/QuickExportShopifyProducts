@@ -1,0 +1,32 @@
+""" QUERY """
+query ($product:ID!, $maxVariant:Int!) {
+  product (id: $product) {
+    id createdAt title tags vendor handle status
+    metafields (first: 45 ) {
+          nodes{
+            namespace
+            key
+            id
+            value
+          }
+    }
+    variants (first:$maxVariant) {
+      nodes{
+        id sku displayName price compareAtPrice 
+        metafields (first: 40) {
+            nodes{
+              id
+              namespace
+              key
+              value
+              }
+            }
+      }
+    }
+  }
+}
+""" VARIABLES """
+{
+  "product": "%ID%"
+  , "maxVariant": 20
+}

@@ -6,8 +6,8 @@ from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 urllib3.disable_warnings (urllib3.exceptions.InsecureRequestWarning)
 
-from .shopifyDB import ShopifyInfoId, ShopifyID
-from .shopifyConnect import ShopifyConnect
+#from .shopifyDB import ShopifyInfoId, ShopifyID
+from .shopifyConnect import ShopifyConnect as SC
 from .utils import Io, Print, Tools
 
 class SH_GRAPHQL_URL (str, Enum):
@@ -47,14 +47,14 @@ class GraphQlQuery:
 
 # #######################
 
-class SthShopifyGraphQL (SthShopify) :
+class ShopifyGraphQL (SC) :
     DEFAULT_FOLDER_GPL = 'graphQL'
     DEFAULT_FOLDER_JSON = 'data/out/json'
 
     def __init__(self, ShopName:str, AdminToken:str) -> None:
         super().__init__(ShopName, AdminToken)
 
-        self.filesFolder = SthShopifyGraphQL.DEFAULT_FOLDER_GPL
+        self.filesFolder = self.DEFAULT_FOLDER_GPL
 
 # #######################
 
@@ -125,7 +125,7 @@ class SthShopifyGraphQL (SthShopify) :
 
     def executeQuery (self, Query:str, Variables:str, ObjectName:str='') -> list:
         returnValue = list()
-        timeoutAllow = SthShopify.HTTP_TIMEOUT
+        timeoutAllow =  SC.HTTP_TIMEOUT
 
         try :
             #Create GraphQL object

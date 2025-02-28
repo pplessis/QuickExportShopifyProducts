@@ -1,0 +1,56 @@
+""" QUERY """
+query ($numProducts: Int!, $cursor: String, $sortKey: ProductSortKeys, $query: String!){
+  products (first: $numProducts, after: $cursor, sortKey: $sortKey, query: $query)
+  {
+      nodes {
+        id
+        createdAt
+        title
+        tags
+        vendor
+        handle
+        status
+
+        variants(first: 20){
+          nodes{
+            id
+            sku
+            displayName
+            price
+            compareAtPrice
+
+            metafields (first: 40) {
+            nodes{
+              id
+              namespace
+              key
+              value
+              }
+            }
+          }
+        }
+        metafields (first: 45 ) {
+          nodes{
+            namespace
+            key
+            id
+            value
+          }
+        }
+      }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+""" VARIABLES """
+{
+   "numProducts": 150
+  ,"cursor": %CURSOR%
+  ,"sortKey": "CREATED_AT"
+  ,"query": "status:ACTIVE OR status:DRAFT AND tags:+Set"
+}
+
+""" #NOTA https://shopify.dev/docs/api/usage/pagination-graphql """
+""" #SEE Query: https://shopify.dev/docs/api/usage/search-syntax """

@@ -36,7 +36,7 @@ class ShopifyConnect:
 
     def __init__(self, ShopName, AdminToken) -> None:
         self.shIds = list()
-        self.sslVersion = ssl.PROTOCOL_TLSv1
+        self.sslVersion = ssl.PROTOCOL_TLSv1_2
 
         self.requestCertificate = self.SHOPIFY_CHECK_CERTIFICATE_DEFAULT
         self.apiVersion = SHOPIFY_API_VERSION
