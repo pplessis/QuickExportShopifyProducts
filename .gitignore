@@ -3,6 +3,6 @@
 __pycache__
 
 # Personal INFO
-app/libs/shopifyInfo.py
 app/tmp/*.json
+.env_*
 .env

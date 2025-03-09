@@ -33,7 +33,7 @@ def Main(Folders:dict) -> None:
     Print.log(jsonFile, 5, 'File Saved')
     jsonRaw = shopifyConnect.getJson(rowData)
 
-    # TODO : Optimisation 
+    # TODO: Optimization 
 
     # Convert rowData to object instances
     data = json.loads (jsonRaw)
