@@ -1,5 +1,5 @@
-from os import path as PA
-from app        import main
+from os        import path as PA
+from app       import app
 
 # Grabs the folder where the script runs.
 BASEDIR             = PA.abspath(PA.dirname(__file__))
@@ -17,4 +17,5 @@ APP_FOLDERS = {       'base': BASEDIR
 
 
 # Launch Main Program
-app = main.Main(APP_FOLDERS)
+#app = main.Main(APP_FOLDERS)
+app = app.ExtractMetaObject(APP_FOLDERS)

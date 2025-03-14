@@ -4,7 +4,6 @@ from typing import List
 @dataclass
 class Metafield:
     __slots__ = 'namespace', 'key', 'id', 'value'
-
     namespace   : str
     key         : str
     id          : str
@@ -13,14 +12,12 @@ class Metafield:
 @dataclass
 class Variant:
     __slots__ = 'id', 'sku', 'displayName', 'price', 'compareAtPrice', 'metafields'
-
     id          : str
     sku         : str
     displayName : str
     price       : str
     compareAtPrice  : str
     metafields  : List[Metafield]
-
 
 @dataclass
 class Product :

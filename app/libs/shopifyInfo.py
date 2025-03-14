@@ -9,6 +9,7 @@ values = dotenv_values()
 
 class CONNECTION_COUNTRY (StrEnum):
     ESP = 'ESP'
+    FRA = 'FRA'
 
 class CONNECTION_ENV (StrEnum):
     TEST = 'TEST'

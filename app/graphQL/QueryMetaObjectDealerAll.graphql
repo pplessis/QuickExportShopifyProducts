@@ -1,0 +1,38 @@
+# SEE: https://shopify.dev/docs/apps/build/custom-data/metaobjects/work-with-metaobjects
+
+""" QUERY """
+query ($numberRow: Int!, $cursor: String) {
+  metaobjects(type: "dealer", first: $numberRow, after: $cursor) {
+    nodes {
+      id
+      handle
+      type
+      md5 :field(key: "md5") {value, key, type}
+      updatedAt
+
+      sth_id :field(key: "sth_id") {value, key, type}
+      account_name: field(key: "account_name") {value, key, type}
+      activity_status: field(key: "activity_status") {value, key, type}
+      ecommerce_role: field(key: "ecommerce_role") {value, key, type}
+
+      tech_external_id :field(key: "tech_external_id") {value, key, type}
+      mailing_zip_postal_code: field(key: "mailing_zip_postal_code") {value, key, type}
+      mobile_phone:field(key: "mobile_phone"){ value, key, type }
+      email:field(key: "email"){ value, key, type }
+
+    }
+    pageInfo {
+            hasNextPage
+            endCursor
+    }
+  }
+}
+
+""" VARIABLES  """
+{
+  "numberRow" : 225
+  , "cursor"  : %CURSOR%
+}
+
+""" SHOPIFY-OBJECT """
+metaobjects
