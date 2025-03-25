@@ -4,7 +4,7 @@ from io import open
 from datetime import datetime
 from re import error, fullmatch, match
 from os import environ, system, path
-from platform import system as getSystem
+from platform import system         as getSystem
 
 DEBUG       = True
 MINI_LEVEL  = 3
@@ -111,14 +111,6 @@ class Tools:
                 returnHTMLCompleted = returnHTMLCompleted.replace( key, (str)(replacement) )
 
         return returnHTMLCompleted
-    #NOTA: with RE
-"""
-    def replace_value_in_html_template(html_list: list, pattern: str) -> list:
-        import re
-
-        matches = [value for value in html_list if re.fullmatch(pattern, value)]
-        return matches
-"""
 
 # #############################################
 class Print:

@@ -7,7 +7,6 @@ class MetaObjectField:
     value       :str
     type        :str
 
-
 @dataclass
 class MetaObjectDealer:
     id          :str

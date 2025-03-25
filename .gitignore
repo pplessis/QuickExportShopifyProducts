@@ -4,5 +4,7 @@ __pycache__
 
 # Personal INFO
 app/tmp/*.json
+app/tmp/*.csv
+
 .env_*
 .env

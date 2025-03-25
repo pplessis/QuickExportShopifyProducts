@@ -4,6 +4,7 @@ import json
 from enum import Enum
 
 from .utils import Io
+from .csvFile import CsvFile
 
 ####
 class SH_ENTITY (str, Enum):
@@ -14,7 +15,7 @@ class SH_ENTITY (str, Enum):
 
 ####
 class ShopifyID:
-    DELIMITER = ';'
+    DELIMITER = CsvFile.DELIMITER
     CSV_HEADER = 'MD5' + DELIMITER + 'SH_PRODUCT_ID' + DELIMITER + 'SH_VARIANT_ID' +  DELIMITER + 'STH_EXT_ID' + DELIMITER + 'STATUS' + DELIMITER + 'TYPE' + 'CREATED_DATE' + DELIMITER + 'MODIFICATION_DATE'
     SHOPIFY_TAGS_SEPARATOR = ','
 

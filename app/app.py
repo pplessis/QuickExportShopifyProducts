@@ -6,6 +6,7 @@ from .libs  import shopifyInfo as SI
 
 from .libs  import dataClasses_shopifyProduct   as DSP
 from .libs  import dataClasses_shopifyDealer    as DSMO
+from .libs  import csvFile as CSV
 
 @staticmethod
 def Main(Folders:dict) -> None:
@@ -41,7 +42,7 @@ def Main(Folders:dict) -> None:
 @staticmethod
 def ExtractMetaObject(Folders:dict) -> None:
     country = SI.CONNECTION_COUNTRY.FRA
-    env = SI.CONNECTION_ENV.TEST
+    env = SI.CONNECTION_ENV.PROD
 
     infosConnect = SI.CONNECTION_INFO[ str(country) ][ str(env) ]
     Print.Environnement  (env , country)
@@ -53,6 +54,7 @@ def ExtractMetaObject(Folders:dict) -> None:
     # Create Shopify GraphQL engine
     shopifyConnect = SG.ShopifyGraphQL(  infosConnect['SHOPIFY_SHOP_NAME']
                       , infosConnect['SHOPIFY_ADMIN_TOKEN'])
+
     # Load GraphQL file
     graphQL_getProducts = shopifyConnect.loadGraphQLFile('QueryMetaObjectDealerAll.graphql' )
 
@@ -60,9 +62,13 @@ def ExtractMetaObject(Folders:dict) -> None:
     rowData = shopifyConnect.executeQueryWithPages(
                                                     graphQL_getProducts.query, graphQL_getProducts.variable
                                                     , graphQL_getProducts.objectName
-                                                    , PageLimit=3 )
+                                                    )
 
     dealers:list[ DSMO.MetaObjectDealer ] = [DSMO.MetaObjectDealer(**p) for p in rowData]
 
+    def getValueInMetaObjectField ( Data:dict ) -> str:
+        return Data['value']
+
+    CSV.CsvFile.objects_to_csv( dealers, Folders   ['tmp'], 'test.csv', getValueInMetaObjectField )
 
     return None
