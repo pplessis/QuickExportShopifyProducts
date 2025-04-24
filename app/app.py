@@ -1,12 +1,12 @@
 import json
-from .libs  import Print
-from .libs  import shopifyConnect as SC
-from .libs  import shopifyGraphQL as SG
-from .libs  import shopifyInfo as SI
+from .libs.src.utils                    import Print
+from .libs.src                          import csvFile as CSV
+from .libs.src.shopify                  import shopifyGraphQL as SG
+from .libs.src.shopify                  import shopifyInfo as SI
 
-from .libs  import dataClasses_shopifyProduct   as DSP
-from .libs  import dataClasses_shopifyDealer    as DSMO
-from .libs  import csvFile as CSV
+from .src  import dataClasses_shopifyProduct   as DSP
+from .src  import dataClasses_shopifyDealer    as DSMO
+
 
 @staticmethod
 def Main(Folders:dict) -> None:
@@ -31,7 +31,7 @@ def Main(Folders:dict) -> None:
     # Load Data
     rowData = shopifyConnect.executeQueryWithPages( graphQL_getProducts.query, graphQL_getProducts.variable , graphQL_getProducts.objectName )
     jsonFile = shopifyConnect.backupResult( rowData, 'PRODUCTS')
-    
+
     # Convert rowData to object instances
     products:list[DSP.Product] = [DSP.Product(**p) for p in rowData]
 

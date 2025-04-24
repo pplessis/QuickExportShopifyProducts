@@ -7,6 +7,5 @@ class ShopifyCustomer:
     name: str
     unit_price: float
     quantity_on_hand: int = 0
-    
-    
+
     pass
