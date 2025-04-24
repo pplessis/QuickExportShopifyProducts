@@ -1,6 +1,6 @@
 import json
 from .libs.src.utils                    import Print
-from .libs.src                          import csvFile as CSV
+from .libs.src.csv                          import csvFile as CSV
 from .libs.src.shopify                  import shopifyGraphQL as SG
 from .libs.src.shopify                  import shopifyInfo as SI
 
