@@ -3,16 +3,33 @@ from tkinter import messagebox, ttk
 
 class ExtractorApplication(tk.Frame):
     TYPE_EXPORT = ['Product', 'Customer', 'Custom']
-
+####################@
     def __init__(self, master):
         super().__init__(master)
         self.master = master
         self.pack(fill="both", expand=True)
 
-        self._create_widgets()
-        self._set_default_export_type()
+        # Manage Radio Button
+        self.radioSelected = tk.StringVar()
+        self.radioSelected.set( ExtractorApplication.TYPE_EXPORT[0] )
 
+        #Magane Text Label
+        self.label_results = None
+
+        self._create_widgets()
+        #self._set_default_export_type()
+####################@
     def _create_widgets(self):
+
+        """ Create Frame Widgets
+            Create the main title label with a large font
+            Create a horizontal separator line
+            Create radio buttons for each export type
+            Create a label to show the selected export type
+            Create a button to launch the export
+            Create a results label with black background and green text
+        """
+
         ## Title
         title_label = tk.Label(
             self,
@@ -25,14 +42,17 @@ class ExtractorApplication(tk.Frame):
 
         ## Options
 
-        export_type_var = tk.StringVar()
+        container = tk.StringVar()
         for export_type in self.TYPE_EXPORT:
             tk.Radiobutton(
                 self,
-                variable=export_type_var,
-                text=export_type,
-                value=export_type,
-                command=self.change_export_type,
+
+                value=export_type,  # Value Under CONTROL
+                text=export_type,   # Texte Under CONTROL
+
+                variable=self.radioSelected,        # Varible to save the value
+                command = self.change_export_type,  # Function to call when change
+
             ).pack(anchor="w", padx=10, pady=5)
 
         self.label_selected = tk.Label(self)
@@ -44,34 +64,55 @@ class ExtractorApplication(tk.Frame):
         extract_button["command"] = self.launch_export
         extract_button.pack(side="top")
 
-        self.label_results = tk.Label(
+        ## Show Results
+        self.label_results = tk.Text(
             self,
-            font=("Helvetica", 10),
-            anchor='nw',
-            background='#000000',
-            foreground='#00FF00',
-            width=100,
-            height=50,
+            bg="black",
+            fg="green",
+            height=100,
+            width=50,
         )
+
         self.label_results.pack(anchor='w', padx=10, pady=5, side="top")
 
+####################@
     def _set_default_export_type(self):
-        export_type_var = tk.StringVar()
-        export_type_var.set(self.TYPE_EXPORT[0])
-        self.export_type_var = export_type_var
+        """Default values
+        """
         self.update_label_selected()
 
+####################@
     def update_label_selected(self):
-        selected_value = self.export_type_var.get()
-        self.label_selected.config(text=f"Selected: {selected_value}")
+        """Update the selected label.
+        """
 
-    def change_export_type(self, value):
-        print(f"Changed Export to {value}")
-        self.export_type_var.set(value)
-        self.update_label_selected()
+        selected_value = self.radioSelected.get()
+        self.label_selected.config(text=f"Selected : {selected_value}")
+    
+    def update_label_results(self, text) -> None:
+        """Update the results label.
+        """
 
+        if (self.label_results != None):
+            self.label_results.insert(1.0, text + "\n")
+            #new = self.label_results.cget("text") + "\n" + text
+            #self.label_results.config(new)
+
+####################@
+    def change_export_type(self):
+        """Update values in texts labels
+        """
+        valueNew = self.radioSelected.get()
+        print(f'Selected(NEW): {valueNew}')
+
+        self.update_label_selected  ()
+        self.update_label_results   (valueNew)
+
+####################@
     def launch_export(self):
-        selected_value = self.export_type_var.get()
+        """Launch BTN export
+        """
+        selected_value = self.radioSelected.get()
         print(f"Launch Export for {selected_value}")
 
         if selected_value == self.TYPE_EXPORT[0]:
@@ -82,7 +123,7 @@ class ExtractorApplication(tk.Frame):
             # Customer
             print("Customer")
 
-
+####################@
 class Application(tk.Tk):
     def __init__(self, master):
         super().__init__(master)

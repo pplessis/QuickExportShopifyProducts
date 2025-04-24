@@ -9,6 +9,8 @@ class CsvFile:
     HEAD_PK_NAME = 'TECH_EXTERNAL_ID'
     DELIMITER = ';'
     ENDLINE = '\n'
+    QUOTECHAR = '"'
+    DEFAULT_ENCODING = 'utf-8'
 
     def __init__( self, Data:list, WithHeader:bool = True, NamespaceHeader:str ='' , Filename:str='' ,PkName = None ) -> None:
         """_summary_
@@ -190,6 +192,38 @@ class CsvFile:
             raise StopIteration
 
         return self.rawData [self.index]
+    def saveCsv (self, FilePath:str) -> str:
+        """Save the CSV File in a file.
+
+        Args:
+            FilePath (str): Path of the file
+            Filename (str): Name of the file
+
+        Returns:
+            str: Path of the file
+        """
+        newFile = path.join ( FilePath , self.filename )
+
+        with open(newFile, 'w', newline=CsvFile.ENDLINE, encoding=CsvFile.DEFAULT_ENCODING ) as csvfile:
+            fieldnames = self.headerLine
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            # Écrire l'en-tête du fichier CSV
+            writer.writeheader()
+
+            # Écrire les données des objets dans le fichier CSV
+            for obj in self.rawData:
+                #writer.writerow({'Name': obj.name, 'Age': obj.age, 'Profession': obj.profession})
+
+                # Create Dicionary from DATA
+                currentRow = dict()
+                for index in range(len(self.headerLine)):
+                    currentRow.update( {self.headerLine[index]: obj[index] } )
+
+                ## Save Data in CSV
+                writer.writerow(currentRow)
+
+        return newFile
 
 # ######################
     @staticmethod
@@ -269,8 +303,9 @@ class CsvFile:
                     if ( not( isinstance(value, dict) )  ):
                         currentRow.update( {name: str(value) } )
                     else:
-                        valueTmp = Func (value)
-                        currentRow.update( {name: valueTmp } )
+                        if (Func!=None):
+                            valueTmp = Func (value)
+                            currentRow.update( {name: valueTmp } )
 
                 ## Save Data in CSV
                 writer.writerow(currentRow)
